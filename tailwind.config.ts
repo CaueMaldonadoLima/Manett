@@ -1,5 +1,5 @@
-import { palette } from "@/styles/colors";
-import { fontFamily } from "@/styles/fontFamly";
+import { palette } from './src/styles/colors';
+import { fontFamily } from "./src/styles/fontFamly";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -10,11 +10,6 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       colors: palette,
       fontFamily: fontFamily,
     },
