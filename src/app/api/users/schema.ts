@@ -2,10 +2,11 @@ import { pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 const users = pgTable("users", {
   id: text("id").primaryKey(),
+  googleId: text("google_id").unique(),
   firstName: varchar("first_name", { length: 255 }).notNull(),
   lastName: varchar("last_name", { length: 255 }).notNull(),
   email: varchar("email", { length: 255 }).notNull().unique(),
-  password: varchar("password", { length: 255 }).notNull(),
+  password: varchar("password", { length: 255 }), // may be null if googleId is set
   username: varchar("username", { length: 255 }).unique(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
