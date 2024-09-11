@@ -25,7 +25,7 @@ export async function POST(request: Request) {
   // TODO: Add error
   if (!user) return;
 
-  const validPassword = await verify(user.password, password, {
+  const validPassword = await verify(user.password ?? "", password, {
     memoryCost: 19456,
     timeCost: 2,
     outputLen: 32,
