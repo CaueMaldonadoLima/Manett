@@ -1,9 +1,8 @@
 import React from 'react';
 
 type TextProps = {
-    fontWeight?: string; //to-do change to a type
+    fontWeight?: 'thin' | 'extralight' | 'light' | 'normal' | 'medium' | 'semibold' | 'bold' | 'extrabold' | 'black'; 
     fontSize?: number;
-    fontFamily?: 'Poppins' | 'Leckerli';
     className?: string;
     children: React.ReactNode;
 }
@@ -17,8 +16,10 @@ const Text : React.FC<TextProps> = ({
     return (
         <span
             className={`
-                
-            `}
+                ${fontWeight ? `font-${fontWeight}` : ''}
+                ${fontSize ? `text-${fontSize}` : ''}
+                ${className}
+        `}
         >
             {children}
         </span>
