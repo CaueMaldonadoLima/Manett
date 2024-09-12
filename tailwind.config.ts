@@ -1,5 +1,4 @@
 import { palette } from './src/styles/colors';
-import { fontFamily } from "./src/styles/fontFamly";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -11,7 +10,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: palette,
-      fontFamily: fontFamily,
+      fontFamily: {
+        mono: ["var(--font-poppins)"],
+      },
     },
   },
   plugins: [],
