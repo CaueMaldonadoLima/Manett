@@ -15,8 +15,9 @@ export async function GET(request: Request): Promise<Response> {
   const codeVerifier = cookies().get("google_code_verifier")?.value ?? null;
 
   if (!code || !state || !storedState || state !== storedState || !codeVerifier)
-    return new Response("error", {
+    return Response.json({
       status: 400,
+      message: "Problem with google auth setup",
     });
 
   try {
@@ -75,6 +76,7 @@ export async function GET(request: Request): Promise<Response> {
         .set({ googleId: googleUser.sub })
         .where(eq(users.id, existingUser.id));
     } else {
+      // user does not exist
       const userId = generateIdFromEntropySize(10); // 16 characters long
 
       await db.insert(users).values({
@@ -88,14 +90,12 @@ export async function GET(request: Request): Promise<Response> {
 
     return NextResponse.redirect("http://localhost:3000/");
   } catch (e) {
-    if (e instanceof OAuth2RequestError) {
-      return new Response("invalid code", {
-        status: 400,
-      });
-    }
+    if (e instanceof OAuth2RequestError)
+      return Response.json({ status: 400, message: "Invalid code" });
 
-    return new Response(null, {
+    return Response.json({
       status: 500,
+      message: "Something went wrong with google login",
     });
   }
 }
