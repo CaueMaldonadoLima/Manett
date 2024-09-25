@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { users } from "@/app/api/users/schema";
 import { eq } from "drizzle-orm";
 import { generateIdFromEntropySize } from "lucia";
-import { NextResponse } from "next/server";
+import { redirect } from "next/navigation";
 
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
@@ -57,7 +57,7 @@ export async function GET(request: Request): Promise<Response> {
         sessionCookie.attributes,
       );
 
-      return NextResponse.redirect("http://localhost:3000/");
+      redirect("http://localhost:3000/");
     }
 
     // user does not exist or does not have google linked
@@ -88,7 +88,7 @@ export async function GET(request: Request): Promise<Response> {
       });
     }
 
-    return NextResponse.redirect("http://localhost:3000/");
+    return redirect("http://localhost:3000/");
   } catch (e) {
     if (e instanceof OAuth2RequestError)
       return Response.json({ status: 400, message: "Invalid code" });
