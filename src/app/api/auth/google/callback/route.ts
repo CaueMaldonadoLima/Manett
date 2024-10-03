@@ -3,9 +3,10 @@ import { OAuth2RequestError } from "arctic";
 import { googleAuth, lucia } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { users } from "@/app/api/users/schema";
-import { eq } from "drizzle-orm";
+import { eq, and, or, sql } from "drizzle-orm";
 import { generateIdFromEntropySize } from "lucia";
-import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
+import { accounts, Provider } from "../../schema";
 
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
@@ -39,54 +40,64 @@ export async function GET(request: Request): Promise<Response> {
 
     // get account by googleId
     const [user] = await db
-      .select()
-      .from(users)
-      .where(eq(users.googleId, googleUser.sub))
-      .limit(1);
+      .select({
+        id: users.id,
+        email: users.email,
+        username: users.username,
+        providers: sql`ARRAY_AGG(accounts.provider) AS providers`,
+      })
+      .from(accounts)
+      .leftJoin(users, eq(users.id, accounts.userId))
+      .where(
+        or(
+          and(
+            eq(accounts.provider, Provider.google),
+            eq(accounts.credential, googleUser.sub),
+          ),
+          and(
+            eq(accounts.provider, Provider.password),
+            eq(users.email, googleUser.email),
+          ),
+        ),
+      )
+      .groupBy(users.id);
 
-    // user exists
-    if (user) {
-      const session = await lucia.createSession(user.id, {
-        email: user.email,
-        username: user.username,
-      });
-      const sessionCookie = lucia.createSessionCookie(session.id);
-      cookies().set(
-        sessionCookie.name,
-        sessionCookie.value,
-        sessionCookie.attributes,
-      );
-
-      redirect("http://localhost:3000/");
-    }
-
-    // user does not exist or does not have google linked
-
-    // check for account with same email
-    const [existingUser] = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, googleUser.email))
-      .limit(1);
-
-    // user exists but didnt have google login
-    if (existingUser) {
-      await db
-        .update(users)
-        .set({ googleId: googleUser.sub })
-        .where(eq(users.id, existingUser.id));
-    } else {
-      // user does not exist
+    // user does not exist
+    if (!user) {
+      console.log("a");
+      console.log(user);
       const userId = generateIdFromEntropySize(10); // 16 characters long
-
       await db.insert(users).values({
         id: userId,
-        googleId: googleUser.sub,
         firstName: googleUser.given_name,
         lastName: googleUser.family_name,
         email: googleUser.email,
       });
     }
+    // user exists but does not have google provider
+    else if (!new Set(user.providers as Array<Provider>).has(Provider.google)) {
+      console.log("b");
+      console.log(user);
+      const accountId = generateIdFromEntropySize(10); // 16 characters long
+      const account = {
+        id: accountId,
+        userId: user.id as string,
+        provider: Provider.google,
+        credential: googleUser.sub,
+      };
+      await db.insert(accounts).values(account);
+    }
+
+    const session = await lucia.createSession(user.id as string, {
+      email: user.email,
+      username: user.username,
+    });
+    const sessionCookie = lucia.createSessionCookie(session.id);
+    cookies().set(
+      sessionCookie.name,
+      sessionCookie.value,
+      sessionCookie.attributes,
+    );
 
     return redirect("http://localhost:3000/");
   } catch (e) {

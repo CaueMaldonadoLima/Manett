@@ -1,15 +1,14 @@
 import { Lucia } from "lucia";
-import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
-import { users, sessions } from "@/app/api/users/schema";
-import { db } from "@/lib/db";
 import { Google } from "arctic";
-
-const adapter = new DrizzlePostgreSQLAdapter(db, sessions, users);
+import { RedisAdapter } from "./adapters/redisAdapter";
+import { redis } from "../db";
 
 type DatabaseUserAttributes = {
   email: string;
-  username: string;
+  username: string | null;
 };
+
+const adapter = new RedisAdapter(redis);
 
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
