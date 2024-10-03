@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db": "drizzle-kit studio",
+    "migration:generate": "drizzle-kit generate --name ",
+    "migration:drop": "drizzle-kit drop",
+    "migration:run": "drizzle-kit migrate"
   },
   "dependencies": {
     "@lucia-auth/adapter-drizzle": "^1.1.0",
