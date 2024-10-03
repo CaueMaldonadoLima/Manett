@@ -54,14 +54,14 @@ erDiagram
     CATEGORY {
         uuid id PK
         varchar(255) title
-        varchar(510) description "nullable"
+        text description "nullable"
         varchar(255) icon_name
         date created_at
         date updated_at
 
         uuid user_id FK
         %% allows for nested categories
-        uuid category_id FK "nullable"
+        uuid parent_category_id FK "nullable"
     }
 
     BANK_ACCOUNT {

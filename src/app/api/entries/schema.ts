@@ -5,13 +5,14 @@ const entries = pgTable("entries", {
   id: text("id").primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description").notNull(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at")
     .notNull()
     .$onUpdate(() => new Date()),
+
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
 });
 
 type InsertEntry = typeof entries.$inferInsert;
