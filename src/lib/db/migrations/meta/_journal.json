@@ -36,5 +36,12 @@
       "when": 1727974489917,
       "tag": "0004_create_categories_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1727996001780,
+      "tag": "0005_create_bank_account_schema",
+      "breakpoints": true
     }
   ]
