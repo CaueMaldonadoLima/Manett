@@ -77,6 +77,30 @@ export async function GET(request: Request): Promise<Response> {
     else if (!(user.providers as Array<Provider>).includes(Provider.google)) {
       await createAccount(user.id as string, googleUser);
     }
+    // user exists but does not have google provider
+    else if (!new Set(user.providers as Array<Provider>).has(Provider.google)) {
+      console.log("b");
+      console.log(user);
+      const accountId = generateIdFromEntropySize(10); // 16 characters long
+      const account = {
+        id: accountId,
+        userId: user.id as string,
+        provider: Provider.google,
+        credential: googleUser.sub,
+      };
+      await db.insert(accounts).values(account);
+    }
+
+    const session = await lucia.createSession(user.id as string, {
+      email: user.email,
+      username: user.username,
+    });
+    const sessionCookie = lucia.createSessionCookie(session.id);
+    cookies().set(
+      sessionCookie.name,
+      sessionCookie.value,
+      sessionCookie.attributes,
+    );
 
     const session = await lucia.createSession(user.id as string, {
       email: user.email,
