@@ -5,10 +5,13 @@ const users = pgTable("users", {
   googleId: text("google_id").unique(),
   firstName: varchar("first_name", { length: 255 }).notNull(),
   lastName: varchar("last_name", { length: 255 }).notNull(),
+  username: varchar("username", { length: 255 }).unique(),
   email: varchar("email", { length: 255 }).notNull().unique(),
   password: varchar("password", { length: 255 }), // may be null if googleId is set
-  username: varchar("username", { length: 255 }).unique(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at")
+    .notNull()
+    .$onUpdate(() => new Date()),
 });
 
 type InsertUser = typeof users.$inferInsert;
