@@ -8,7 +8,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { users } from "@/app/api/users/schema";
 import { categories } from "../categories/schema";
-import { bankAccounts } from "../bank-account/schema";
+import { bankAccounts } from "../bank-accounts/schema";
 
 enum EntryType {
   income = "income",
