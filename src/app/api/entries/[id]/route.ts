@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { eq } from "drizzle-orm";
 import { entries } from "../schema";
 
-// get category by id
+// get entry by id
 export async function GET(_: Request, { params }: { params: { id: string } }) {
   const { id } = params;
 
@@ -21,7 +21,7 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
   });
 }
 
-// update category
+// update entry
 export async function PATCH(
   request: Request,
   { params }: { params: { id: string } },
@@ -47,7 +47,7 @@ export async function PATCH(
   });
 }
 
-// delete category
+// delete entry
 export async function DELETE(
   _: Request,
   { params }: { params: { id: string } },

@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { eq } from "drizzle-orm";
 import { entries } from "../../schema";
 
-// get all user categories
+// get all user entries
 export async function GET(_: Request, { params }: { params: { id: string } }) {
   const { id: userId } = params;
 
