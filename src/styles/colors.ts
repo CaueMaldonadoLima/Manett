@@ -1,10 +1,15 @@
 export const palette = { 
-    'primaryBlue' : '#1E3A5F',
-    'secondaryBlue' : '#3AAFA9',
-    'accentColor' : '#F08A5D',
-    'background' : '#F4F4F9',
-    'darkGray' : '#2D2D2D',
-    'success' : '#28A745',
-    'error' : '#DC3545',
-    'warning' : '#FFC107',
+    'text': '#0f0c13',
+    'background': '#eae4f1',
+    'primary': '#5700c2',
+    'secondary': '#b9a6ad',
+    'accent': '#d42177',
+    'secondaryBg': '#ffffff',
+
+    'darkText': '#efecf3',
+    'darkBackground': '#140e1b',
+    'darkPrimary': '#943dff',
+    'darkSecondary': '#59464d',
+    'darkAccent': '#de2b82',
+    'darkSecondaryBg': '#2b2631',
 }
