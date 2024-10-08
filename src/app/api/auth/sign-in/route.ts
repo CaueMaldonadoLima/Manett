@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     parallelism: 1,
   });
 
-  if (!validPassword)
+  if (!isValidPassword)
     return Response.json({ status: 401, message: "Wrong credentials" });
 
   // create cookie
