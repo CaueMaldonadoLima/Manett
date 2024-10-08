@@ -29,7 +29,6 @@ export async function POST(request: Request) {
     bankAccountId: bankAccountId,
   };
   const [result] = await db.insert(entries).values(entry).returning();
-  console.log("CCCCC");
 
   if (!result)
     return Response.json({ status: 500, message: "Error creating entry" });

@@ -11,7 +11,7 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
     .from(entries)
     .where(eq(entries.userId, userId));
 
-  if (!result)
+  if (result.length === 0)
     return Response.json({
       status: 404,
       message: `No entries found for user with id: ${userId}`,

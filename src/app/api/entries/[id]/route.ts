@@ -6,7 +6,7 @@ import { entries } from "../schema";
 export async function GET(_: Request, { params }: { params: { id: string } }) {
   const { id } = params;
 
-  const result = await db.select().from(entries).where(eq(entries.id, id));
+  const [result] = await db.select().from(entries).where(eq(entries.id, id));
 
   if (!result)
     return Response.json({
@@ -31,7 +31,7 @@ export async function PATCH(
 
   // TODO: Validate input
 
-  const result = await db
+  const [result] = await db
     .update(entries)
     .set(updates)
     .where(eq(entries.id, id))
