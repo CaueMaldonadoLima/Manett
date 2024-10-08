@@ -5,7 +5,7 @@ import { bankAccounts } from "../schema";
 export async function GET(_: Request, { params }: { params: { id: string } }) {
   const { id } = params;
 
-  const result = await db
+  const [result] = await db
     .select()
     .from(bankAccounts)
     .where(eq(bankAccounts.id, id));
@@ -32,7 +32,7 @@ export async function PATCH(
 
   // TODO: Validate input
 
-  const result = await db
+  const [result] = await db
     .update(bankAccounts)
     .set(updates)
     .where(eq(bankAccounts.id, id))
