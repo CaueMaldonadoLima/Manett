@@ -5,3 +5,20 @@
 .poppins {
     font-family: 'Poppins', sans-serif;
 }
+
+@layer base {
+    :root {
+      --text: #0f0c13;
+      --background: #eae4f1;
+      --primary: #5700c2;
+      --secondary: #ffebfb;
+      --accent: #d42177;
+    }
+    .dark {
+      --text: #efecf3;
+      --background: #140e1b;
+      --primary: #943dff;
+      --secondary: #140010;
+      --accent: #de2b82;
+    }
+  }
