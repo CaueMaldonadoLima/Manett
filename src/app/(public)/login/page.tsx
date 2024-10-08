@@ -1,24 +1,21 @@
-import { Text } from '@/components'
 import Image from 'next/image'
 import React from 'react'
 
 export default function page() {
 	return (
 		<main className='bg-background bg-opacity-90 space-x-16 flex w-full h-screen px-64 py-16'>
-			<div className='bg-background w-full h-full flex rounded-lg shadow-lg items-center justify-center'>
-				<div className='w-1/2 items-center flex flex-col h-full justify-center text-center'>
-					<Text className='text-3xl font-bold'>Login</Text>
-					<input type="text" />
-					<input type="text" />
-					<input type="text" />
-				</div>
-			</div>
-			<div className='bg-background w-full h-full flex rounded-lg shadow-lg items-center justify-center'>
-				<div className='w-1/2 items-center flex flex-col h-full justify-center text-center'>
-					<Text className='text-3xl font-bold'>Login</Text>
-					<input type="text" />
-					<input type="text" />
-					<input type="text" />
+			<Image 
+				src={'/images/purple-logo.svg'} 
+				width={300}
+				height={300}	
+				alt={''}
+			/>
+			<div>
+				<div className='bg-white flex flex-col shadow-md p-16 rounded-lg'>
+					<span>Get Started</span>
+					<span className='text-secondary'>Create your account now!</span>
+					<label htmlFor="" className='text-text'>email</label>
+					<input type="text" className='border-2 rounded-sm border-secondary p-2'/>
 				</div>
 			</div>
 		</main>
