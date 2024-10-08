@@ -1,9 +1,9 @@
 import { pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 import { users } from "@/app/api/users/schema";
 
-export const expensesTable = pgTable("expenses_table", {
+const entries = pgTable("entries", {
   id: text("id").primaryKey(),
-  title: varchar("title", { length: 256 }).notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
   description: text("description").notNull(),
   userId: text("user_id")
     .notNull()
@@ -14,5 +14,8 @@ export const expensesTable = pgTable("expenses_table", {
     .$onUpdate(() => new Date()),
 });
 
-export type InsertExpense = typeof expensesTable.$inferInsert;
-export type SelectExpense = typeof expensesTable.$inferSelect;
+type InsertEntry = typeof entries.$inferInsert;
+type SelectEntry = typeof entries.$inferSelect;
+
+export type { InsertEntry, SelectEntry };
+export { entries };
