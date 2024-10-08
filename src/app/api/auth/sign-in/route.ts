@@ -9,21 +9,18 @@ import { redirect } from "next/navigation";
 export async function POST(request: Request) {
   const { email, password } = await request.json();
 
-  const user = (
-    await db
-      .select({
-        id: users.id,
-        email: users.email,
-        username: users.username,
-        password: users.password,
-      })
-      .from(users)
-      .where(eq(users.email, email))
-      .limit(1)
-  )[0];
+  const [user] = await db
+    .select({
+      id: users.id,
+      email: users.email,
+      username: users.username,
+      password: users.password,
+    })
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
 
-  // TODO: Add error
-  if (!user) return;
+  if (!user) return Response.json({ status: 404, message: "User not found" });
 
   const validPassword = await verify(user.password ?? "", password, {
     memoryCost: 19456,
@@ -32,8 +29,8 @@ export async function POST(request: Request) {
     parallelism: 1,
   });
 
-  // TODO: Add error
-  if (!validPassword) return;
+  if (!validPassword)
+    return Response.json({ status: 401, message: "Wrong credentials" });
 
   const session = await lucia.createSession(user.id, {
     email: user.email,
