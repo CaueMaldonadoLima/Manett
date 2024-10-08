@@ -89,7 +89,11 @@ export async function GET(request: Request): Promise<Response> {
       sessionCookie.attributes,
     );
 
-    return redirect("http://localhost:3000/");
+    const operation = !!user ? "in" : "up";
+    return Response.json({
+      status: operation === "in" ? 200 : 201,
+      message: `Signed ${operation} successfully`,
+    });
   } catch (e) {
     if (e instanceof OAuth2RequestError)
       return Response.json({ status: 400, message: "Invalid code" });
