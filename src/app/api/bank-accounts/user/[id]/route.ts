@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
-import { categories } from "../../schema";
 import { eq } from "drizzle-orm";
+import { bankAccounts } from "../../schema";
 
 // get all user categories
 export async function GET(_: Request, { params }: { params: { id: string } }) {
@@ -8,18 +8,18 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
 
   const result = await db
     .select()
-    .from(categories)
-    .where(eq(categories.userId, userId));
+    .from(bankAccounts)
+    .where(eq(bankAccounts.userId, userId));
 
   if (result.length === 0)
     return Response.json({
       status: 404,
-      message: `No categories found for user with id: ${userId}`,
+      message: `No bank accounts found for user with id: ${userId}`,
     });
 
   return Response.json({
     status: 200,
-    message: "User categories retrieved successfully",
+    message: "User bank accounts retrieved successfully",
     data: result,
   });
 }

@@ -1,30 +1,28 @@
 import { db } from "@/lib/db";
 import { eq } from "drizzle-orm";
-import { categories } from "../schema";
+import { bankAccounts } from "../schema";
 
-// get category by id
 export async function GET(_: Request, { params }: { params: { id: string } }) {
   const { id } = params;
 
   const [result] = await db
     .select()
-    .from(categories)
-    .where(eq(categories.id, id));
+    .from(bankAccounts)
+    .where(eq(bankAccounts.id, id));
 
   if (!result)
     return Response.json({
       status: 404,
-      message: `No categories found with id: ${id}`,
+      message: `No bank accounts found with id: ${id}`,
     });
 
   return Response.json({
     status: 200,
-    message: "Category retrieved successfully",
+    message: "Bank account retrieved successfully",
     data: result,
   });
 }
 
-// update category
 export async function PATCH(
   request: Request,
   { params }: { params: { id: string } },
@@ -35,17 +33,17 @@ export async function PATCH(
   // TODO: Validate input
 
   const [result] = await db
-    .update(categories)
+    .update(bankAccounts)
     .set(updates)
-    .where(eq(categories.id, id))
+    .where(eq(bankAccounts.id, id))
     .returning();
 
   if (!result)
-    return Response.json({ status: 404, message: "Category not found" });
+    return Response.json({ status: 404, message: "Bank account not found" });
 
   return Response.json({
     status: 200,
-    message: "Category updated successfully",
+    message: "Bank account updated successfully",
     data: result,
   });
 }
@@ -58,16 +56,16 @@ export async function DELETE(
   const { id } = params;
 
   const [result] = await db
-    .delete(categories)
-    .where(eq(categories.id, id))
+    .delete(bankAccounts)
+    .where(eq(bankAccounts.id, id))
     .returning();
 
   if (!result)
-    return Response.json({ status: 404, message: "Category not found" });
+    return Response.json({ status: 404, message: "Bank account not found" });
 
   return Response.json({
     status: 200,
-    message: "Category deleted successfully",
+    message: "Bank account deleted successfully",
     data: result,
   });
 }
