@@ -5,7 +5,6 @@ import { db } from "@/lib/db";
 import { users } from "@/app/api/users/schema";
 import { eq, and, or, sql } from "drizzle-orm";
 import { generateIdFromEntropySize } from "lucia";
-import { NextResponse } from "next/server";
 import { accounts, Provider } from "../../schema";
 
 export async function GET(request: Request): Promise<Response> {
@@ -44,7 +43,7 @@ export async function GET(request: Request): Promise<Response> {
         id: users.id,
         email: users.email,
         username: users.username,
-        providers: sql`ARRAY_AGG(accounts.provider) AS providers`,
+        providers: sql`ARRAY_AGG(accounts.provider) AS providers`, // creates array of providers
       })
       .from(accounts)
       .leftJoin(users, eq(users.id, accounts.userId))
@@ -64,8 +63,6 @@ export async function GET(request: Request): Promise<Response> {
 
     // user does not exist
     if (!user) {
-      console.log("a");
-      console.log(user);
       const userId = generateIdFromEntropySize(10); // 16 characters long
       await db.insert(users).values({
         id: userId,
@@ -73,19 +70,12 @@ export async function GET(request: Request): Promise<Response> {
         lastName: googleUser.family_name,
         email: googleUser.email,
       });
+
+      await createAccount(userId, googleUser);
     }
     // user exists but does not have google provider
-    else if (!new Set(user.providers as Array<Provider>).has(Provider.google)) {
-      console.log("b");
-      console.log(user);
-      const accountId = generateIdFromEntropySize(10); // 16 characters long
-      const account = {
-        id: accountId,
-        userId: user.id as string,
-        provider: Provider.google,
-        credential: googleUser.sub,
-      };
-      await db.insert(accounts).values(account);
+    else if (!(user.providers as Array<Provider>).includes(Provider.google)) {
+      await createAccount(user.id as string, googleUser);
     }
 
     const session = await lucia.createSession(user.id as string, {
@@ -109,6 +99,17 @@ export async function GET(request: Request): Promise<Response> {
       message: "Something went wrong with google login",
     });
   }
+}
+
+async function createAccount(userId: string, googleUser: GoogleUser) {
+  const accountId = generateIdFromEntropySize(10); // 16 characters long
+  const account = {
+    id: accountId,
+    userId,
+    provider: Provider.google,
+    credential: googleUser.sub,
+  };
+  return await db.insert(accounts).values(account);
 }
 
 export type GoogleUser = {
