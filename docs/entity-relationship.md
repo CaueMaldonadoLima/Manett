@@ -6,23 +6,24 @@ erDiagram
 
     USER {
         uuid id PK
-        uuid google_id "nullable"
         varchar(255) first_name
         varchar(255) last_name
         varchar(255) username "unique"
         varchar(255) email "unique"
-        varchar(255) password "hashed"
         date created_at
         date updated_at
     }
 
-    %% created by lucia auth
-    SESSION {
+    ACCOUNT {
         uuid id PK
-        date expires_at
+        providerEnum provider "password, google, github"
+        varchar(255) credential "google/github id or password"
+        date created_at
+        date updated_at
 
         uuid user_id FK
     }
+
 
     ENTRY {
         uuid id PK
@@ -36,7 +37,7 @@ erDiagram
 
         uuid user_id FK
         uuid category_id FK
-        uuid account_id FK
+        uuid bank_account_id FK
         uuid repeating_entry_id FK "nullable"
     }
 
@@ -53,17 +54,17 @@ erDiagram
     CATEGORY {
         uuid id PK
         varchar(255) title
-        varchar(510) description "nullable"
+        text description "nullable"
         varchar(255) icon_name
         date created_at
         date updated_at
 
         uuid user_id FK
         %% allows for nested categories
-        uuid category_id FK "nullable"
+        uuid parent_category_id FK "nullable"
     }
 
-    ACCOUNT {
+    BANK_ACCOUNT {
         uuid id PK
         varchar(255) title
         varchar(255) description "nullable"
@@ -75,10 +76,20 @@ erDiagram
         uuid user_id FK
     }
 
+    %% stored in redis for speed purposes
+    SESSION {
+        uuid id PK
+        date expires_at
+        object attributes "email, username"
+
+        uuid user_id FK
+    }
+
 
     USER 1 to 0+ ENTRY : ""
     USER 1 to one or zero SESSION : ""
     USER 1 to 0+ CATEGORY : ""
+    USER 1 to 1+ BANK_ACCOUNT : ""
     USER 1 to 1+ ACCOUNT : ""
 
     CATEGORY one or zero to one or zero CATEGORY : "nested"

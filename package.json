@@ -6,17 +6,22 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db": "drizzle-kit studio",
+    "migration:generate": "drizzle-kit generate --name ",
+    "migration:drop": "drizzle-kit drop",
+    "migration:run": "drizzle-kit migrate"
   },
   "dependencies": {
     "@lucia-auth/adapter-drizzle": "^1.1.0",
     "@next/env": "^14.2.9",
     "@node-rs/argon2": "^1.8.3",
+    "@vercel/kv": "^3.0.0",
     "@vercel/postgres": "^0.9.0",
     "arctic": "^1.9.2",
     "drizzle-orm": "^0.33.0",
     "lucia": "^3.2.0",
-    "next": "14.2.6",
+    "next": "^14.2.14",
     "react": "^18",
     "react-dom": "^18"
   },

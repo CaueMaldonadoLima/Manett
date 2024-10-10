@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { lucia } from "@/lib/auth";
+import { accounts, Provider } from "../schema";
 
 export async function POST(request: Request) {
   const { email, password, firstName, lastName } = await request.json();
@@ -25,23 +26,31 @@ export async function POST(request: Request) {
     });
 
   const userId = generateIdFromEntropySize(10); // 16 characters long
+  const user = {
+    id: userId,
+    email: email,
+    firstName: firstName,
+    lastName: lastName,
+  };
+  await db.insert(users).values(user);
+
+  // create account
+  const accountId = generateIdFromEntropySize(10); // 16 characters long
   const hashedPassword = await hash(password, {
     memoryCost: 19456,
     timeCost: 2,
     outputLen: 32,
     parallelism: 1,
   });
-
-  const user = {
-    id: userId,
-    email: email,
-    password: hashedPassword,
-    firstName: firstName,
-    lastName: lastName,
+  const account = {
+    id: accountId,
+    userId: userId,
+    provider: Provider.password,
+    credential: hashedPassword,
   };
+  await db.insert(accounts).values(account);
 
-  await db.insert(users).values(user);
-
+  // create session
   const session = await lucia.createSession(userId, { email });
   const sessionCookie = lucia.createSessionCookie(session.id);
   cookies().set(

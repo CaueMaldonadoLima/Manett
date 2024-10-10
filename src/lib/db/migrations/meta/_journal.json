@@ -15,6 +15,40 @@
       "when": 1726026042704,
       "tag": "0001_add_google_auth",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1727931311404,
+      "tag": "0002_rename_expenses",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1727946705041,
+      "tag": "0003_separate_account_from_user",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1727974489917,
+      "tag": "0004_create_categories_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1727996001780,
+      "tag": "0005_create_bank_account_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1727997609899,
+      "tag": "0006_create_entries_schema",
+      "breakpoints": true
     }
   ]
-}
