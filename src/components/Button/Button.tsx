@@ -1,9 +1,15 @@
 import { FC } from "react"
 
 type ButtonProps = {  
-    variant?: 'solid' | 'outline';
+    variant?: 
+        'solid-primary' | 
+        'solid-secondary' | 
+        'solid-accent' | 
+        'outline-primary' | 
+        'outline-secondary' | 
+        'outline-accent' | 
+        'outline';
     children: React.ReactNode
-    color?: 'primary' | 'secondary' | 'accent'
     icon?: {
         position: 'left' | 'right'
         icon: React.ReactNode
@@ -11,10 +17,15 @@ type ButtonProps = {
     onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
-const Button: FC<ButtonProps> = ({ variant = 'solid', children, icon, onClick, color = 'primary'}) => {
+const Button: FC<ButtonProps> = ({ variant = 'solid-primary', children, icon, onClick}) => {
 
     const variantStyles = {
-        'solid': `bg-${color} text-white border-2 border-${color}`,
+        'solid-primary': `bg-primary text-white border-2 border-primary`,
+        'solid-secondary': `bg-secondary text-white border-2 border-secondary`,
+        'solid-accent': `bg-accent text-white border-2 border-accent`,
+        'outline-primary': `bg-white text-primary border-2 border-primary`,
+        'outline-secondary': `bg-white text-secondary border-2 border-secondary`,
+        'outline-accent': `bg-white text-accent border-2 border-accent`,
         'outline': `bg-white text-text border-2 border-text`
     }
 
