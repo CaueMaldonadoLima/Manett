@@ -1,3 +1,4 @@
+import { Button } from '@/components'
 import { ArrowRightIcon } from '@/components/icons'
 import { LoginCard, LoginForm, LoginTitle, SigninForm } from '@/components/PageComponents/Login'
 import Image from 'next/image'
@@ -5,6 +6,10 @@ import React from 'react'
 
 export default function page() {
 	const isLogin = true
+
+	function onSubmit() {
+		console.log('onSubmit')
+	}
 
 	return (
 		<main className='bg-background flex-1 bg-opacity-90 space-x-16 flex-col w-full px-24 h-screen'>
@@ -23,13 +28,11 @@ export default function page() {
 							<LoginTitle title={'Welcome back'} subtitle='Continue with Google or enter your details.'/>
 							<SigninForm/>
 							<div>
-								<button className='w-full bg-primary p-2 rounded-md my-2'>
-									<div className='text-white flex w-full items-center justify-center'>
-										<span className='mr-2'>
-											Sign Up
-										</span>
-									</div>
-								</button>
+								<Button
+									variant='solid'
+								> 
+									Sign Up
+								</Button>
 								<div className='w-full gap-2 flex flex-row'>
 									<span className='text-secondary'>Don't have an account yet?</span>
 									<button className='text-primary'>Sign up</button>  
