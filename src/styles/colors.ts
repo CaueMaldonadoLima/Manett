@@ -12,4 +12,6 @@ export const palette = {
     'darkSecondary': '#59464d',
     'darkAccent': '#de2b82',
     'darkSecondaryBg': '#2b2631',
+
+    'error': '#ff0000',
 }

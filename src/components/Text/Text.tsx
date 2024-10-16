@@ -3,8 +3,8 @@ import React from 'react';
 type TextProps = {
     className?: string;
     children: React.ReactNode;
-    type?: 'title' | 'subtitle' | 'default' | 'label';
-    variant?: 'primary' | 'secondary' | 'accent' | 'default'
+    type?: 'title' | 'subtitle' | 'default' | 'label' | 'error';
+    variant?: 'primary' | 'secondary' | 'accent' | 'default' | 'error';
 }
 
 const Text : React.FC<TextProps> = ({
@@ -18,14 +18,16 @@ const Text : React.FC<TextProps> = ({
         title: 'text-2xl',
         subtitle: 'text-xl',
         default: 'text-base',
-        label: 'text-sm'
+        label: 'text-sm',
+        error: 'text-xs'
     }
 
     const color = {
         primary: 'text-primary',
         secondary: 'text-secondary',
         accent: 'text-accent',
-        default: 'text-text'
+        default: 'text-text',
+        error: 'text-error'
     }
 
     return (
