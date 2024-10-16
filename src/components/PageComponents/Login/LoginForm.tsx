@@ -1,5 +1,6 @@
 import { Button } from "@/components/Button/Button"
 import { GoogleIcon } from "@/components/icons"
+import { InputText } from "@/components/Input"
 import { Text } from "@/components/Text/Text"
 
 const LogInForm = () => {
@@ -18,6 +19,16 @@ const LogInForm = () => {
             </div>
             <div>
                 <div className="gap-4 w-full flex-col flex justify-center items-center">
+                    <InputText 
+                        labelText={'E-mail'}
+                        type='text'
+                        placeholder='mail@example.com'
+                    />
+                    <InputText
+                        labelText={'Password'}
+                        type='text'
+                        placeholder='●●●●●●'
+                    />
                     {/* <FormInputText 
                         labelText={'E-mail'}
                         type='text'
