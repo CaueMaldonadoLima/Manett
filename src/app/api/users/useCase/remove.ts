@@ -1,3 +1,4 @@
+import { NotFoundError } from "../../errors";
 import { UserRepository } from "../repository";
 
 export async function remove(id: string) {
@@ -5,8 +6,7 @@ export async function remove(id: string) {
   const repository = new UserRepository();
   const user = await repository.remove(id);
 
-  // TODO: Create specific error
-  if (!user) throw new Error("User not found");
+  if (!user) throw new NotFoundError("User not found");
 
   return user;
 }

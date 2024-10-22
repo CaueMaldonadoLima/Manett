@@ -1,6 +1,11 @@
 import { z } from "zod";
 import useCase from "../useCase";
 import { lucia } from "@/lib/auth";
+import {
+  InputParseError,
+  UnauthenticatedError,
+  UnauthorizedError,
+} from "../../errors";
 
 const schema = z.object({
   id: z.string().trim().min(1),
@@ -11,19 +16,17 @@ export async function update(
   input: z.infer<typeof schema>,
   sessionId: string | undefined,
 ) {
-  // TODO: Create specific error
-  if (!sessionId) throw new Error("Unauthorized");
+  if (!sessionId)
+    throw new UnauthenticatedError("Must be logged in to update user info");
 
-  // TODO: Validate session
-  const { session, user } = await lucia.validateSession(sessionId);
+  const { session } = await lucia.validateSession(sessionId);
 
   const { data, error } = schema.safeParse(input);
 
-  // TODO: Create specific error
-  if (error) throw error;
-  // TODO: Create specific error + reusable function
-  // User can only update their own data
-  if (user?.id !== data.id) throw new Error("Unauthorized");
+  if (error) throw new InputParseError("Invalid input", { cause: error });
+  // TODO: move to useCase layer
+  if (session?.userId !== data.id)
+    throw new UnauthorizedError("Cannot update other user's data");
 
   const result = await useCase.update(data.id, data.user);
   return result;
