@@ -4,7 +4,8 @@ import { RedisAdapter } from "./adapters/redisAdapter";
 import { redis } from "../db";
 
 type DatabaseUserAttributes = {
-  email: string;
+  firstName: string;
+  lastName: string;
   username: string | null;
 };
 
@@ -18,7 +19,8 @@ export const lucia = new Lucia(adapter, {
     },
   },
   getUserAttributes: (attributes) => ({
-    email: attributes.email,
+    firstName: attributes.firstName,
+    lastName: attributes.lastName,
     username: attributes.username,
   }),
 });

@@ -78,6 +78,9 @@ export class RedisAdapter implements Adapter {
     // No session found
     if (!session) return [null, null];
 
+    // convert session expiresAt to date
+    session.expiresAt = new Date(session.expiresAt);
+
     // TODO: user repository
     const user = await db
       .select()
@@ -89,7 +92,11 @@ export class RedisAdapter implements Adapter {
       session,
       {
         id: user.id,
-        attributes: { email: user.email, username: user.username },
+        attributes: {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+        },
       },
     ];
   }
