@@ -12,8 +12,4 @@ const users = pgTable("users", {
     .$onUpdate(() => new Date()),
 });
 
-type InsertUser = typeof users.$inferInsert;
-type SelectUser = typeof users.$inferSelect;
-
-export type { InsertUser, SelectUser };
 export { users };
