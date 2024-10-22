@@ -8,12 +8,14 @@ type InputProps = {
     labelText?: string;
     type?: 'text' | 'password'; 
     placeholder?: string;  
+    error?: string;
 } 
 
 const InputText:FC<InputProps> = ({
     labelText,
     type = 'text',
-    placeholder = '...'
+    placeholder = '...',
+    error
 }) => {
 
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -35,7 +37,11 @@ const InputText:FC<InputProps> = ({
             {labelText &&
                 <Text type="label">{labelText}</Text> //TODO: add strong/weak password message
             }
-            <div className={`${labelText && 'mt-1'} border-2 border-secondary rounded-md flex w-full focus-within:border-primary`}>
+            <div className={`
+                ${labelText && 'mt-1'} 
+                ${error? 'border-error focus-within:border-error' : 'focus-within:border-primary'}
+                bg-white border-2 border-secondary rounded-md flex w-full
+            `}>
                 <input 
                     type={type === 'password'? (passwordVisible? 'text': 'password'): type} 
                     className="p-2 bg-transparent focus:border-none focus:outline-none focus:ring-0 w-full placeholder-secondary"
