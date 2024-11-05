@@ -19,8 +19,8 @@ const SignUpScreen: FC<SignUpScreenProps> = ({ setIsLogin }) => {
             </div>
             <LoginCard>
                 <LoginTitle title={'Get Started'} subtitle={'Create an account now!'}/>
-                <SignUpForm />
-                <div>
+                <SignUpForm setIsLogin={setIsLogin}/>
+                {/* <div>
                     <button className='w-full bg-primary p-2 rounded-md my-2'>
                         <div className='text-white flex w-full items-center justify-center'>
                             <span className='mr-2'>
@@ -31,9 +31,9 @@ const SignUpScreen: FC<SignUpScreenProps> = ({ setIsLogin }) => {
                     </button>
                     <div className='w-full gap-2 flex flex-row'>
                         <span className='text-secondary'>Already have an account?</span>
-                        <button onClick={() => setIsLogin(true)} className='text-primary'>Sign in</button> 
+                        <button onClick={() => setIsLogin(true)} className='text-primary'>Log in</button> 
                     </div>
-                </div>
+                </div> */}
             </LoginCard>
         </>
     )
