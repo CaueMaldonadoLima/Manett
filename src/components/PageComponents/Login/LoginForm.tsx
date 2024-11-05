@@ -39,7 +39,7 @@ console.log(emailValue)
                 variant="outline"
                 icon={{position: 'left', icon: <GoogleIcon/>}}
             >
-                Sign in with Google
+                Log in with Google
             </Button> 
             <div className="w-full flex-row items-center justify-center flex">
                 <hr className="w-full h-[1.5px] rounded-full bg-secondary"/>
@@ -49,16 +49,14 @@ console.log(emailValue)
             <div>
                 <div className="gap-4 w-full flex-col flex justify-center items-center">
                     <InputText 
-                        register={register}
-                        name="email"
+                        register={register('email')}
                         labelText={'E-mail'}
                         type='text'
                         placeholder='mail@example.com'
                         errors={errors.email}
                     />
                     <InputText
-                        register={register}
-                        name="password"
+                        register={register('password')}
                         labelText={'Password'}
                         type='password'
                         placeholder='●●●●●●'
@@ -69,9 +67,7 @@ console.log(emailValue)
                     <Text type='label' variant={'primary'} className="font-medium">Forgot password?</Text>
                 </button>
                 <div className="pb-8">
-                    <Button type="submit"> 
-                        Sign In
-                    </Button>
+                    <Button type="submit">Log In</Button>
                     <div className='w-full gap-2 flex flex-row'>
                         <span className='text-secondary'>Don't have an account yet?</span>
                         <button onClick={() => setIsLogin(false)} className='text-primary'>Sign up</button>  

@@ -9,8 +9,7 @@ type InputProps = {
     type?: 'text' | 'password'; 
     placeholder?: string;  
     errors?: any;
-    register: any;
-    name: string;
+    register?: any;
 } 
 
 const InputText:FC<InputProps> = ({
@@ -19,7 +18,6 @@ const InputText:FC<InputProps> = ({
     placeholder = '...',
     errors,
     register,
-    name, 
 }) => {
 
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -46,7 +44,7 @@ const InputText:FC<InputProps> = ({
                 bg-white rounded-md flex w-full
             `}>
                 <input 
-                    {...register(name)}
+                    {...register}
                     type={type === 'password'? (passwordVisible? 'text': 'password'): type} 
                     className="p-2 bg-transparent focus:border-none focus:outline-none focus:ring-0 w-full placeholder-secondary"
                     placeholder={placeholder}

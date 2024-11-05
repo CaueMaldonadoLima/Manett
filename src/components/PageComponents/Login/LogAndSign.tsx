@@ -21,7 +21,7 @@ const LogAndSign: FC<LogAndSignProps> = () => {
 					alt={''}
 				/>
 			</div>
-			<div className='flex gap-6 ease-int-out transition-opacity'>
+			<div className='flex gap-6 ease-in-out transition-opacity'>
 				{isLogin ? 
 					<LogInScreen setIsLogin={setIsLogin}/>
 				: 
