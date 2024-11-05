@@ -5,6 +5,8 @@ export const palette = {
     'secondary': '#b9a6ad',
     'accent': '#d42177',
     'secondaryBg': '#ffffff',
+    'warning': '#ffc107',
+    'success': '#3aafa9',
 
     'darkText': '#efecf3',
     'darkBackground': '#140e1b',

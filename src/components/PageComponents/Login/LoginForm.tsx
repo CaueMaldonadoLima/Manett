@@ -12,7 +12,7 @@ type LoginFormProps = {
 }
 
 const loginSchema = z.object({
-    email: z.string().min(1, "Email is required").email("Invalid email"), 
+    email: z.string().min(1, "E-mail is required").email("Invalid e-mail"), 
     password: z.string().min(1, "Password is required").min(6, "Password must be at least 6 characters long"), 
 })
 
@@ -26,13 +26,10 @@ const LogInForm: FC<LoginFormProps> = ({setIsLogin}) => {
         }
     })
 
-    const emailValue = watch('email'); // Obtém o valor do email
-    const passwordValue = watch('password');
-
     const onSubmit = (data: z.infer<typeof loginSchema>) => {
         console.log(data)
     }
-console.log(emailValue)
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <Button 
@@ -56,6 +53,7 @@ console.log(emailValue)
                         errors={errors.email}
                     />
                     <InputText
+                        passwordValue={watch('password')}
                         register={register('password')}
                         labelText={'Password'}
                         type='password'

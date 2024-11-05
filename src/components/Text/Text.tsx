@@ -4,7 +4,7 @@ type TextProps = {
     className?: string;
     children: React.ReactNode;
     type?: 'title' | 'subtitle' | 'default' | 'label' | 'error';
-    variant?: 'primary' | 'secondary' | 'accent' | 'default' | 'error';
+    variant?: 'primary' | 'secondary' | 'accent' | 'default' | 'error' | 'success' | 'warning';
 }
 
 const Text : React.FC<TextProps> = ({
@@ -27,7 +27,9 @@ const Text : React.FC<TextProps> = ({
         secondary: 'text-secondary',
         accent: 'text-accent',
         default: 'text-text',
-        error: 'text-error'
+        error: 'text-error',
+        success: 'text-success',
+        warning: 'text-warning'
     }
 
     return (
