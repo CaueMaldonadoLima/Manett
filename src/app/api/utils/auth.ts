@@ -1,5 +1,6 @@
 import { lucia } from "@/lib/auth";
 import { UnauthenticatedError } from "@/app/api/errors";
+import { cookies } from "next/headers";
 
 export async function validateSession(sessionId: string) {
   try {
@@ -12,4 +13,8 @@ export async function validateSession(sessionId: string) {
       { cause: error },
     );
   }
+}
+
+export function getSessionId() {
+  return cookies().get(lucia.sessionCookieName)?.value;
 }

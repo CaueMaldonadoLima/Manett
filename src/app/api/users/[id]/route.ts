@@ -1,26 +1,15 @@
-import { cookies } from "next/headers";
-import { lucia } from "@/lib/auth";
 import controller from "@/app/api/users/controller";
-import { handleError } from "@/app/api/errors";
-import { User } from "@/app/api/users/schema";
+import util from "@/app/api/utils";
 
 export async function GET(_: Request, { params }: { params: { id: string } }) {
-  const sessionId = cookies().get(lucia.sessionCookieName)?.value;
+  const sessionId = util.getSessionId();
 
-  let user: User;
   try {
-    user = await controller.getById(params, sessionId);
+    const result = await controller.getById(params, sessionId);
+    return util.successResponse(result, "User data retrieved successfully");
   } catch (error) {
-    return handleError(error as Error);
+    return util.errorResponse(error as Error);
   }
-
-  return Response.json(
-    {
-      message: "User data retrieved successfully",
-      data: user,
-    },
-    { status: 200 },
-  );
 }
 
 export async function PATCH(
@@ -28,45 +17,28 @@ export async function PATCH(
   { params }: { params: { id: string } },
 ) {
   const { id } = params;
-  const { data } = await request.json();
-  const sessionId = cookies().get(lucia.sessionCookieName)?.value;
+  const sessionId = util.getSessionId();
 
-  let result: User;
   try {
-    // guarantee the id is the same as the one in the URL
-    data.id = id;
-    result = await controller.update(data, sessionId);
-  } catch (error) {
-    return handleError(error as Error);
-  }
+    const { data } = await request.json();
 
-  return Response.json(
-    {
-      message: "User updated successfully",
-      data: result,
-    },
-    { status: 200 },
-  );
+    const result = await controller.update({ ...data, id: id }, sessionId);
+    return util.successResponse(result, "User updated successfully");
+  } catch (error) {
+    return util.errorResponse(error as Error);
+  }
 }
 
 export async function DELETE(
   _: Request,
   { params }: { params: { id: string } },
 ) {
-  const sessionId = cookies().get(lucia.sessionCookieName)?.value;
+  const sessionId = util.getSessionId();
 
-  let result: User;
   try {
-    result = await controller.remove(params, sessionId);
+    const result = await controller.remove(params, sessionId);
+    return util.successResponse(result, "User deleted successfully");
   } catch (error) {
-    return handleError(error as Error);
+    return util.errorResponse(error as Error);
   }
-
-  return Response.json(
-    {
-      message: "User deleted successfully",
-      data: result,
-    },
-    { status: 200 },
-  );
 }
