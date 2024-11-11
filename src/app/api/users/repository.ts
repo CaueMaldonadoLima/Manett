@@ -21,6 +21,7 @@ export class UserRepository {
         .returning();
       return result;
     } catch (error) {
+      // TODO: return readable error due to duplicate username
       throw error;
     }
   }

@@ -11,7 +11,8 @@ const schema = insertUserSchema
     username: true,
   })
   .partial()
-  .extend({ id: z.string().trim().min(10) });
+  .extend({ id: z.string().trim().min(10) })
+  .strict();
 
 export async function update(
   input: z.infer<typeof schema>,

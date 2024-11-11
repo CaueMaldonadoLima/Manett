@@ -3,9 +3,11 @@ import useCase from "@/app/api/users/useCase";
 import util from "@/app/api/utils";
 import { UnauthenticatedError } from "@/app/api/errors";
 
-const schema = z.object({
-  id: z.string().trim().min(1),
-});
+const schema = z
+  .object({
+    id: z.string().trim().min(1),
+  })
+  .strict();
 
 export async function getById(
   input: z.infer<typeof schema>,
