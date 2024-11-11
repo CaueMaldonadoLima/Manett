@@ -5,12 +5,11 @@ import { handleError } from "@/app/api/errors";
 import { User } from "@/app/api/users/schema";
 
 export async function GET(_: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
   const sessionId = cookies().get(lucia.sessionCookieName)?.value;
 
   let user: User;
   try {
-    user = await controller.getById(id, sessionId);
+    user = await controller.getById(params, sessionId);
   } catch (error) {
     return handleError(error as Error);
   }
@@ -29,12 +28,14 @@ export async function PATCH(
   { params }: { params: { id: string } },
 ) {
   const { id } = params;
-  const { email, ...updates } = await request.json();
+  const { data } = await request.json();
   const sessionId = cookies().get(lucia.sessionCookieName)?.value;
 
   let result: User;
   try {
-    result = await controller.update({ id, ...updates }, sessionId);
+    // guarantee the id is the same as the one in the URL
+    data.id = id;
+    result = await controller.update(data, sessionId);
   } catch (error) {
     return handleError(error as Error);
   }
@@ -52,12 +53,11 @@ export async function DELETE(
   _: Request,
   { params }: { params: { id: string } },
 ) {
-  const { id } = params;
   const sessionId = cookies().get(lucia.sessionCookieName)?.value;
 
   let result: User;
   try {
-    result = await controller.remove(id, sessionId);
+    result = await controller.remove(params, sessionId);
   } catch (error) {
     return handleError(error as Error);
   }
