@@ -15,9 +15,10 @@ type ButtonProps = {
         icon: React.ReactNode
     }
     onClick?: React.MouseEventHandler<HTMLButtonElement>
+    type?: 'button' | 'submit' | 'reset'
 }
 
-const Button: FC<ButtonProps> = ({ variant = 'solid-primary', children, icon, onClick}) => {
+const Button: FC<ButtonProps> = ({ variant = 'solid-primary', children, icon, onClick, type = 'button'}) => {
 
     const variantStyles = {
         'solid-primary': `bg-primary text-white border-2 border-primary`,
@@ -35,7 +36,8 @@ const Button: FC<ButtonProps> = ({ variant = 'solid-primary', children, icon, on
                 ${variantStyles[variant]}
                 w-full p-2 rounded-md flex text-center items-center justify-center gap-2 focus:outline-none
             `}
-            onClick={onClick}    
+            onClick={onClick}
+            type={type}    
         >
             {icon?.position === 'left' && <span>{icon.icon}</span>}
             {children}

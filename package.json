@@ -13,18 +13,20 @@
     "migration:run": "drizzle-kit migrate"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@lucia-auth/adapter-drizzle": "^1.1.0",
     "@next/env": "^14.2.9",
     "@node-rs/argon2": "^1.8.3",
+    "@tanstack/react-query": "^5.59.15",
     "@vercel/kv": "^3.0.0",
     "@vercel/postgres": "^0.9.0",
     "arctic": "^1.9.2",
     "drizzle-orm": "^0.33.0",
     "drizzle-zod": "^0.5.1",
     "lucia": "^3.2.0",
-    "next": "^14.2.14",
-    "react": "^18",
-    "react-dom": "^18",
+    "next": "^14.2.15",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.0",
     "zod": "^3.23.8"
   },
