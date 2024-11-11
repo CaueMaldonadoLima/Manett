@@ -20,7 +20,7 @@ export async function PATCH(
   const sessionId = util.getSessionId();
 
   try {
-    const { data } = await request.json();
+    const data = await request.json();
 
     const result = await controller.update({ ...data, id: id }, sessionId);
     return util.successResponse(result, "User updated successfully");
