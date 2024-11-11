@@ -1,4 +1,5 @@
 import { pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
 
 const users = pgTable("users", {
   id: text("id").primaryKey(),
@@ -12,4 +13,12 @@ const users = pgTable("users", {
     .$onUpdate(() => new Date()),
 });
 
-export { users };
+const insertUserSchema = createInsertSchema(users, {
+  firstName: (schema) => schema.firstName.trim().min(1),
+  lastName: (schema) => schema.lastName.trim().min(1),
+  username: (schema) => schema.username.trim().min(1),
+  email: (schema) => schema.email.email(),
+});
+
+export { users, insertUserSchema };
+export type User = typeof users.$inferSelect;

@@ -1,9 +1,8 @@
-import { NotFoundError } from "../../errors";
-import { UserRepository } from "../repository";
+import { NotFoundError } from "@/app/api/errors";
+import { UserRepository } from "@/app/api/users/repository";
+import { User } from "@/app/api/users/schema";
 
-// TODO: Fix type
-export async function update(id: string, values: any) {
-  // TODO: inject dependency
+export async function update(id: string, values: Partial<User>) {
   const repository = new UserRepository();
   const user = await repository.update(id, values);
 

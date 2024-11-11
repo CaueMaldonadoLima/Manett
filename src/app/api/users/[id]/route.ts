@@ -1,14 +1,14 @@
 import { cookies } from "next/headers";
 import { lucia } from "@/lib/auth";
-import controller from "../controller";
-import { handleError } from "../../errors";
+import controller from "@/app/api/users/controller";
+import { handleError } from "@/app/api/errors";
+import { User } from "@/app/api/users/schema";
 
 export async function GET(_: Request, { params }: { params: { id: string } }) {
   const { id } = params;
   const sessionId = cookies().get(lucia.sessionCookieName)?.value;
 
-  // TODO: Fix type
-  let user: any | undefined;
+  let user: User;
   try {
     user = await controller.getById(id, sessionId);
   } catch (error) {
@@ -24,7 +24,6 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
   );
 }
 
-// update user
 export async function PATCH(
   request: Request,
   { params }: { params: { id: string } },
@@ -33,10 +32,9 @@ export async function PATCH(
   const { email, ...updates } = await request.json();
   const sessionId = cookies().get(lucia.sessionCookieName)?.value;
 
-  // TODO: Fix type
-  let result: any | undefined;
+  let result: User;
   try {
-    result = await controller.update({ id, user: updates }, sessionId);
+    result = await controller.update({ id, ...updates }, sessionId);
   } catch (error) {
     return handleError(error as Error);
   }
@@ -50,7 +48,6 @@ export async function PATCH(
   );
 }
 
-// make sure to confirm this multiple times in the frontend
 export async function DELETE(
   _: Request,
   { params }: { params: { id: string } },
@@ -58,8 +55,7 @@ export async function DELETE(
   const { id } = params;
   const sessionId = cookies().get(lucia.sessionCookieName)?.value;
 
-  // TODO: Fix type
-  let result: any | undefined;
+  let result: User;
   try {
     result = await controller.remove(id, sessionId);
   } catch (error) {

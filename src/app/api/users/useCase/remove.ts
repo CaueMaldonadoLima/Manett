@@ -1,8 +1,7 @@
-import { NotFoundError } from "../../errors";
-import { UserRepository } from "../repository";
+import { NotFoundError } from "@/app/api/errors";
+import { UserRepository } from "@/app/api/users/repository";
 
 export async function remove(id: string) {
-  // TODO: inject dependency
   const repository = new UserRepository();
   const user = await repository.remove(id);
 

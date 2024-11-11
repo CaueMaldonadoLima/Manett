@@ -1,11 +1,11 @@
 import { z } from "zod";
-import useCase from "../useCase";
+import useCase from "@/app/api/users/useCase";
 import { lucia } from "@/lib/auth";
 import {
   InputParseError,
   UnauthenticatedError,
   UnauthorizedError,
-} from "../../errors";
+} from "@/app/api/errors";
 
 const schema = z.string().trim().min(1);
 
@@ -22,7 +22,6 @@ export async function remove(
 
   if (error) throw new InputParseError("Invalid input", { cause: error });
 
-  // TODO: move to useCase layer
   if (session?.userId !== data)
     throw new UnauthorizedError("Cannot delete other user's account");
 
