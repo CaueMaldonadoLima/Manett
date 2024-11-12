@@ -4,7 +4,6 @@ import { db } from "@/lib/db";
 import { verify } from "@node-rs/argon2";
 import { eq, and } from "drizzle-orm";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { accounts, Provider } from "../schema";
 
 export async function POST(request: Request) {
@@ -47,5 +46,9 @@ export async function POST(request: Request) {
     sessionCookie.attributes,
   );
 
-  redirect("/");
+  return Response.json({
+    status: 200,
+    message: "Signed in successfully",
+    data: sessionCookie,
+  });
 }
