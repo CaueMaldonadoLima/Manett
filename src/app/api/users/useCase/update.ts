@@ -6,10 +6,10 @@ import util from "@/app/api/utils";
 export async function update(data: Partial<User>, sessionId: string) {
   const session = await util.validateSession(sessionId);
 
-  if (session.userId !== data.id)
+  if (session.userId !== data.id!)
     throw new UnauthorizedError("Cannot update other user's data");
 
-  const user = await repository.update(data.id, data);
+  const user = await repository.update(data.id!, data);
 
   if (!user) throw new NotFoundError("User not found");
 
