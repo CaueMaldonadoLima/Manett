@@ -20,5 +20,7 @@ const insertUserSchema = createInsertSchema(users, {
   email: (schema) => schema.email.email(),
 });
 
+type User = typeof users.$inferSelect;
+
+export type { User };
 export { users, insertUserSchema };
-export type User = typeof users.$inferSelect;
