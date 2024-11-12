@@ -9,6 +9,8 @@ import {
 import { users } from "@/app/api/users/schema";
 import { categories } from "../categories/schema";
 import { bankAccounts } from "../bank-accounts/schema";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
 
 enum EntryType {
   income = "income",
@@ -44,8 +46,14 @@ const entries = pgTable("entries", {
   // TODO: Add repeating entry relation
 });
 
-type InsertEntry = typeof entries.$inferInsert;
-type SelectEntry = typeof entries.$inferSelect;
+const insertEntrySchema = createInsertSchema(entries, {
+  title: (schema) => schema.title.trim().min(1),
+  value: () => z.number().positive().finite().multipleOf(0.01),
+  date: () => z.coerce.date(),
+});
 
-export type { InsertEntry, SelectEntry };
-export { entries, entryTypeEnum };
+type Entry = typeof entries.$inferSelect;
+type CreateEntry = typeof entries.$inferInsert;
+
+export type { Entry, CreateEntry };
+export { entries, entryTypeEnum, insertEntrySchema };
