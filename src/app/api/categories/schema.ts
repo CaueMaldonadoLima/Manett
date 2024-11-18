@@ -6,6 +6,7 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 import { users } from "../users/schema";
+import { createInsertSchema } from "drizzle-zod";
 
 const categories = pgTable("categories", {
   id: text("id").primaryKey(),
@@ -28,8 +29,13 @@ const categories = pgTable("categories", {
   ),
 });
 
-type InsertCategory = typeof categories.$inferInsert;
-type SelectCategory = typeof categories.$inferSelect;
+const insertCategorySchema = createInsertSchema(categories, {
+  title: (schema) => schema.title.trim().min(1),
+  iconName: (schema) => schema.iconName.trim().min(1),
+});
 
-export type { InsertCategory, SelectCategory };
-export { categories };
+type Category = typeof categories.$inferSelect;
+type CreateCategory = typeof categories.$inferInsert;
+
+export type { Category, CreateCategory };
+export { categories, insertCategorySchema };
