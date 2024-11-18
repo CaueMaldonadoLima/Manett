@@ -9,7 +9,7 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
       { userId: params.id },
       sessionId,
     );
-    return util.successResponse(result, "Entries successfully");
+    return util.successResponse(result, "Entries retrieved successfully");
   } catch (error) {
     return util.errorResponse(error as Error);
   }
