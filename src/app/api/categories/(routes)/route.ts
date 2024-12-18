@@ -1,4 +1,4 @@
-import controller from "@/app/api/entries/controller";
+import controller from "@/app/api/categories/controller";
 import util from "@/app/api/utils";
 
 export async function POST(request: Request) {
