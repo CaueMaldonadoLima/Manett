@@ -1,5 +1,6 @@
 import { pgEnum, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 import { users } from "../users/schema";
+import { createInsertSchema } from "drizzle-zod";
 
 enum Provider {
   password = "password",
@@ -25,8 +26,10 @@ const accounts = pgTable("accounts", {
     .$onUpdate(() => new Date()),
 });
 
-type InsertAccount = typeof accounts.$inferInsert;
-type SelectAccount = typeof accounts.$inferSelect;
+const insertAccountSchema = createInsertSchema(accounts);
 
-export type { InsertAccount, SelectAccount };
-export { providerEnum, accounts, Provider };
+type Account = typeof accounts.$inferSelect;
+type CreateAccount = typeof accounts.$inferInsert;
+
+export type { Account, CreateAccount };
+export { providerEnum, accounts, Provider, insertAccountSchema };
