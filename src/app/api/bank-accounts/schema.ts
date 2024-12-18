@@ -6,6 +6,7 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 import { users } from "../users/schema";
+import { createInsertSchema } from "drizzle-zod";
 
 const bankAccounts = pgTable("bank_accounts", {
   id: text("id").primaryKey(),
@@ -25,8 +26,13 @@ const bankAccounts = pgTable("bank_accounts", {
     .references(() => users.id, { onDelete: "cascade" }),
 });
 
-type InsertBankAccount = typeof bankAccounts.$inferInsert;
-type SelectBankAccount = typeof bankAccounts.$inferSelect;
+const insertBankAccountSchema = createInsertSchema(bankAccounts, {
+  title: (schema) => schema.title.trim().min(1),
+  iconName: (schema) => schema.iconName.trim().min(1),
+});
 
-export type { InsertBankAccount, SelectBankAccount };
-export { bankAccounts };
+type BankAccount = typeof bankAccounts.$inferSelect;
+type CreateBankAccount = typeof bankAccounts.$inferInsert;
+
+export type { BankAccount, CreateBankAccount };
+export { bankAccounts, insertBankAccountSchema };
