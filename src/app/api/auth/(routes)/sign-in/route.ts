@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { verify } from "@node-rs/argon2";
 import { eq, and } from "drizzle-orm";
 import { cookies } from "next/headers";
-import { accounts, Provider } from "../schema";
+import { accounts, Provider } from "../../schema";
 
 export async function POST(request: Request) {
   const { email, password } = await request.json();

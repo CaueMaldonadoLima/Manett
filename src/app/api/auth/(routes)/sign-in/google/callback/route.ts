@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { users } from "@/app/api/users/schema";
 import { eq, and, or, sql } from "drizzle-orm";
 import { generateIdFromEntropySize } from "lucia";
-import { accounts, Provider } from "../../schema";
+import { accounts, Provider } from "@/app/api/auth/schema";
 
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
