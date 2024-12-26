@@ -1,14 +1,11 @@
-import { validateInput } from "./validation";
-import { getSessionId, validateSession, hashPassword } from "./auth";
-import { errorResponse, successResponse } from "./response";
-import { generateId } from "./database";
+import * as validation from "./validation";
+import * as auth from "./auth";
+import * as response from "./response";
+import * as database from "./database";
 
 export default {
-  validateInput,
-  validateSession,
-  getSessionId,
-  hashPassword,
-  successResponse,
-  errorResponse,
-  generateId,
+  ...auth,
+  ...response,
+  ...database,
+  ...validation,
 };
