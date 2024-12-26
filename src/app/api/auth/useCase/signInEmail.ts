@@ -9,18 +9,23 @@ type SigninData = {
 
 export async function signInEmail(data: SigninData) {
   // get user data
-  const user = await repository.account.getByEmail(data.email);
-  if (!user) throw new NotFoundError("User not found");
+  const userAccount = await repository.account.getByEmail(data.email);
+  if (!userAccount) throw new NotFoundError("User not found");
 
   // verify password
-  const isValidPassword = util.verifyPassword(user.credential, data.password);
+  const isValidPassword = util.verifyPassword(
+    userAccount.credential,
+    data.password,
+  );
   if (!isValidPassword) throw new UnauthorizedError("Wrong credentials");
 
   // create session
   const cookie = await repository.session.create({
-    userId: user.id,
-    email: user.email,
+    userId: userAccount.userId,
+    email: userAccount.email,
   });
+
+  const { credential, ...user } = userAccount;
 
   return { cookie, user };
 }
