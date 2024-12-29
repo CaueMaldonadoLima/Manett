@@ -1,28 +1,17 @@
-import { googleAuth } from "@/lib/auth";
-import { cookies } from "next/headers";
-import { generateCodeVerifier, generateState } from "arctic";
-import { redirect } from "next/navigation";
+import controller from "@/app/api/auth/controller";
+import util from "@/app/api/utils";
+
+// Front should redirect to result url to sign in with Google,
+// after that, google will automatically redirect to the callback route
 
 export async function GET(): Promise<Response> {
-  const state = generateState();
-  const codeVerifier = generateCodeVerifier();
-  const url = await googleAuth.createAuthorizationURL(state, codeVerifier, {
-    scopes: ["profile", "email"],
-  });
-
-  cookies().set("google_oauth_state", state, {
-    secure: true,
-    path: "/",
-    httpOnly: true,
-    maxAge: 60 * 10,
-  });
-
-  cookies().set("google_code_verifier", codeVerifier, {
-    secure: true,
-    path: "/",
-    httpOnly: true,
-    maxAge: 60 * 10,
-  });
-
-  return redirect(url.toString());
+  try {
+    const result = await controller.signInGoogle();
+    return util.successResponse(
+      result,
+      "Google sign in session created successfully",
+    );
+  } catch (error) {
+    return util.errorResponse(error as Error);
+  }
 }
