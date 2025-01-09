@@ -1,11 +1,26 @@
-import { pgTable, serial, timestamp, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
 
-export const usersTable = pgTable("users_table", {
-  id: serial("id").primaryKey(),
-  name: varchar("name", { length: 256 }).notNull(),
-  email: varchar("email", { length: 256 }).notNull().unique(),
+const users = pgTable("users", {
+  id: text("id").primaryKey(),
+  firstName: varchar("first_name", { length: 255 }).notNull(),
+  lastName: varchar("last_name", { length: 255 }).notNull(),
+  username: varchar("username", { length: 255 }).unique(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at")
+    .notNull()
+    .$onUpdate(() => new Date()),
 });
 
-export type InsertUser = typeof usersTable.$inferInsert;
-export type SelectUser = typeof usersTable.$inferSelect;
+const insertUserSchema = createInsertSchema(users, {
+  firstName: (schema) => schema.firstName.trim().min(1),
+  lastName: (schema) => schema.lastName.trim().min(1),
+  username: (schema) => schema.username.trim().min(1),
+  email: (schema) => schema.email.email(),
+});
+
+type User = typeof users.$inferSelect;
+
+export type { User };
+export { users, insertUserSchema };
