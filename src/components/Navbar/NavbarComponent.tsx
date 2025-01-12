@@ -17,25 +17,25 @@ const NavBar = () => {
         <nav className="bg-white shadow-md w-full p-4 rounded-md flex flex-row justify-between">
             <Image 
                 src={'/images/pink-logo.svg'} 
-                width={150}
-                height={150}	
+                width={125}
+                height={125}	
                 alt={''}
             />
         <div className="flex flex-row items-center justify-center gap-4">
             <Tooltip text={'Dashboard'} position={'bottom'} className={getActiveClass('/home')}>
-                <DashboardIcon />
+                {DashboardIcon()}
             </Tooltip>
             <Tooltip text={'Receipts'} position={'bottom'} className={getActiveClass('/receipts')}>
-                <RecepeitIcon />
+                {RecepeitIcon()}
             </Tooltip>
             <Tooltip text={'Categories'} position={'bottom'} className={getActiveClass('/categories')}>
-                <CategoriesIcon />
+                {CategoriesIcon()}
             </Tooltip>
             <Tooltip text={'Repeat'} position={'bottom'} className={getActiveClass('/repeat')}>
-                <RepeatIcon />
+                {RepeatIcon()}
             </Tooltip>
             <Tooltip text={'Settings'} position={'bottom'} className={getActiveClass('/settings')}>
-                <CircleUser />
+                <CircleUser className=''/>
             </Tooltip>
         </div>
     </nav> 
