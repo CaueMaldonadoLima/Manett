@@ -3,7 +3,7 @@ import { SubsRow } from "./SubsRow"
 
 const Subscriptions = () => {
     return (
-        <div className="bg-white rounded-md shadow-md px-4 py-2 w-full">
+        <div className="bg-white rounded-md shadow-md px-4 py-2 w-[60%]">
             <div className="flex flex-row w-full justify-between items-center">
                 <p className="text-lg">Subscriptions</p>
                 <Plus className="w-5 h-5"/>
