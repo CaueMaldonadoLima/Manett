@@ -9,10 +9,10 @@ const Entries = () => {
                 <Plus className="w-5 h-5"/>
             </div>
             <div>
-                <EntriesRow title={'Pizza Hut'} type={'Restaurants'} description={'Pizza night with the boys'} value={'- R$45,00'}/>
-                <EntriesRow title={'Pizza Hut'} type={'Restaurants'} description={'Pizza night with the boys'} value={'- R$45,00'}/>
-                <EntriesRow title={'Pizza Hut'} type={'Restaurants'} description={'Pizza night with the boys'} value={'- R$45,00'}/>
-                <EntriesRow title={'Pizza Hut'} type={'Restaurants'} description={'Pizza night with the boys'} value={'- R$45,00'}/>
+                <EntriesRow title={'Pizza Hut'} type={'Restaurants'} description={'Pizza night with the boys'} value={'-R$45,00'}/>
+                <EntriesRow title={'Pizza Hut'} type={'Restaurants'} description={'Pizza night with the boys'} value={'-R$45,00'}/>
+                <EntriesRow title={'Pizza Hut'} type={'Restaurants'} description={'Pizza night with the boys'} value={'-R$45,00'}/>
+                <EntriesRow title={'Pizza Hut'} type={'Restaurants'} description={'Pizza night with the boys'} value={'-R$45,00'}/>
                 {/* rows */}
                 {/* rows */}
                 {/* rows */}
