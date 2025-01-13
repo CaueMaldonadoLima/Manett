@@ -1,5 +1,5 @@
 import { NavBar } from "@/components";
-import { Entries } from "@/components/PageComponents/Home";
+import { Entries, Subscriptions } from "@/components/PageComponents/Home";
 
 export default function page() {
     return (
@@ -10,9 +10,7 @@ export default function page() {
             </div>
             <Entries />
             <div className="flex flex-row gap-4 w-full">
-                <div className="bg-white rounded-md shadow-md px-4 py-2 w-full">
-                    <p className="text-lg">Subscriptions</p>
-                </div>
+                <Subscriptions />
                 <div className="bg-white rounded-md shadow-md px-4 py-2 w-full">
                     <p className="text-lg">Accounts</p>
                 </div>
