@@ -10,6 +10,8 @@ const errorMap: Record<string, { status: number }> = {
   UnauthenticatedError: { status: 401 },
   UnauthorizedError: { status: 403 },
   UniqueConstraintError: { status: 409 },
+  GoogleAuthError: { status: 400 },
+  OAuth2RequestError: { status: 400 },
 };
 
 export function errorResponse(error: Error) {
