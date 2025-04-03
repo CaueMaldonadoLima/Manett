@@ -21,6 +21,7 @@ const insertUserSchema = createInsertSchema(users, {
 });
 
 type User = typeof users.$inferSelect;
+type CreateUser = typeof users.$inferInsert;
 
-export type { User };
+export type { User, CreateUser };
 export { users, insertUserSchema };
