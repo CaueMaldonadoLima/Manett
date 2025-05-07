@@ -1,7 +1,8 @@
 import controller from "@/app/api/categories/controller";
 import util from "@/app/api/utils";
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(_: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const sessionId = util.getSessionId();
 
   try {
@@ -12,10 +13,8 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
   }
 }
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } },
-) {
+export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
   const sessionId = util.getSessionId();
 
@@ -29,10 +28,8 @@ export async function PATCH(
   }
 }
 
-export async function DELETE(
-  _: Request,
-  { params }: { params: { id: string } },
-) {
+export async function DELETE(_: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const sessionId = util.getSessionId();
 
   try {
