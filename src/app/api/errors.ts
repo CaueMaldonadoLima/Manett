@@ -5,6 +5,12 @@ export class DatabaseOperationError extends Error {
   }
 }
 
+export class UniqueConstraintError extends Error {
+  constructor(message: string, options?: ErrorOptions) {
+    super(message, options);
+  }
+}
+
 export class NotFoundError extends Error {
   constructor(message: string, options?: ErrorOptions) {
     super(message, options);
@@ -31,6 +37,12 @@ export class UnauthenticatedError extends Error {
 }
 
 export class UnauthorizedError extends Error {
+  constructor(message: string, options?: ErrorOptions) {
+    super(message, options);
+  }
+}
+
+export class GoogleAuthError extends Error {
   constructor(message: string, options?: ErrorOptions) {
     super(message, options);
   }

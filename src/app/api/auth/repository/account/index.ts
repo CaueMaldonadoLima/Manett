@@ -1,15 +1,15 @@
 import { create } from "./create";
 import { getByEmail } from "./getByEmail";
+import { getByGoogleIdOrEmail } from "./getByGoogleIdOrEmail";
 import { getById } from "./getById";
-import { getByUsername } from "./getByUsername";
-import { update } from "./update";
 import { remove } from "./remove";
+import { update } from "./update";
 
 export default {
   create,
   getByEmail,
   getById,
-  getByUsername,
-  update,
+  getByGoogleIdOrEmail,
   remove,
+  update,
 };

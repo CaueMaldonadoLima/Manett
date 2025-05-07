@@ -6,8 +6,8 @@ const db = drizzle(sql);
 
 // used for session storage
 const redis = createClient({
-  url: process.env.REDIS_REST_API_URL,
-  token: process.env.REDIS_REST_API_TOKEN,
+  url: process.env.SESSION_KV_REST_API_URL,
+  token: process.env.SESSION_KV_REST_API_TOKEN,
 });
 
 export { db, redis };
