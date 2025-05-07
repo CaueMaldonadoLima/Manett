@@ -3,7 +3,8 @@ import { eq } from "drizzle-orm";
 import { entries } from "../schema";
 
 // get entry by id
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(_: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
 
   const [result] = await db.select().from(entries).where(eq(entries.id, id));
@@ -22,10 +23,8 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
 }
 
 // update entry
-export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } },
-) {
+export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
   const { ...updates } = await request.json();
 
@@ -48,10 +47,8 @@ export async function PATCH(
 }
 
 // delete entry
-export async function DELETE(
-  _: Request,
-  { params }: { params: { id: string } },
-) {
+export async function DELETE(_: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
 
   const [result] = await db

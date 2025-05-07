@@ -1,6 +1,6 @@
 import { lucia } from "@/lib/auth";
 import { UnauthenticatedError } from "@/app/api/errors";
-import { cookies } from "next/headers";
+import { cookies, type UnsafeUnwrappedCookies } from "next/headers";
 
 export async function validateSession(sessionId: string) {
   try {
@@ -16,5 +16,5 @@ export async function validateSession(sessionId: string) {
 }
 
 export function getSessionId() {
-  return cookies().get(lucia.sessionCookieName)?.value;
+  return (cookies() as unknown as UnsafeUnwrappedCookies).get(lucia.sessionCookieName)?.value;
 }

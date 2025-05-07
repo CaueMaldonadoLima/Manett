@@ -1,7 +1,8 @@
 import controller from "@/app/api/categories/controller";
 import util from "@/app/api/utils";
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(_: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const sessionId = util.getSessionId();
 
   try {

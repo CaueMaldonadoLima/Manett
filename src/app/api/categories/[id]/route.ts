@@ -3,7 +3,8 @@ import { eq } from "drizzle-orm";
 import { categories } from "../schema";
 
 // get category by id
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(_: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
 
   const [result] = await db
@@ -25,10 +26,8 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
 }
 
 // update category
-export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } },
-) {
+export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
   const { ...updates } = await request.json();
 
@@ -51,10 +50,8 @@ export async function PATCH(
 }
 
 // delete category
-export async function DELETE(
-  _: Request,
-  { params }: { params: { id: string } },
-) {
+export async function DELETE(_: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
 
   const [result] = await db

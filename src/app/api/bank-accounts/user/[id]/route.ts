@@ -3,7 +3,8 @@ import { eq } from "drizzle-orm";
 import { bankAccounts } from "../../schema";
 
 // get all user categories
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(_: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id: userId } = params;
 
   const result = await db
