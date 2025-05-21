@@ -10,8 +10,12 @@ export async function signInGoogle() {
     maxAge: 60 * 10,
   };
 
-  cookies().set("google_oauth_state", state, googleCookieAttributes);
-  cookies().set("google_code_verifier", codeVerifier, googleCookieAttributes);
+  (await cookies()).set("google_oauth_state", state, googleCookieAttributes);
+  (await cookies()).set(
+    "google_code_verifier",
+    codeVerifier,
+    googleCookieAttributes,
+  );
 
   return url;
 }

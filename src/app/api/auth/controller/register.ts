@@ -26,7 +26,7 @@ export async function register(input: z.infer<typeof schema>) {
 
   const { cookie, ...result } = await useCase.register(registerData);
 
-  cookies().set(cookie.name, cookie.value, cookie.attributes);
+  (await cookies()).set(cookie.name, cookie.value, cookie.attributes);
 
   return result;
 }
