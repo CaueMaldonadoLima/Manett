@@ -12,7 +12,7 @@ export async function signInEmail(input: z.infer<typeof schema>) {
   const data = util.validateInput(input, schema);
   const { cookie, ...result } = await useCase.signInEmail(data);
 
-  cookies().set(cookie.name, cookie.value, cookie.attributes);
+  (await cookies()).set(cookie.name, cookie.value, cookie.attributes);
 
   return result;
 }
