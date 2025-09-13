@@ -13,11 +13,20 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Plus } from "lucide-react"
-import { useState } from "react"
+import { useId, useState } from "react"
+
+import type { Category } from '@/types/entries';
+import { CATEGORIES } from '@/mock/categories';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function EntriesDialog() {
   const [amount, setAmount] = useState("")
   const [title, setTitle] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+
+  const listId = useId();
+  const listboxId = `category-listbox-${listId}`;
+  const labelId = `category-label-${listId}`;
 
   return (
     <Dialog>
@@ -27,7 +36,7 @@ export default function EntriesDialog() {
             <Plus/>
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[550px]">
           <DialogHeader>
             <DialogTitle>New Entry</DialogTitle>
             <DialogDescription>
@@ -55,6 +64,25 @@ export default function EntriesDialog() {
                 placeholder="$0.00"
               />
             </div>
+            <div className="grid gap-2">
+              <Label>Category</Label>
+              <Select>                
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {CATEGORIES.map((category) => (
+                    <SelectItem 
+                      key={category.id}
+                      value={category.id}
+                      onSelect={() => setSelectedCategory(category)}
+                    > 
+                      {category.id}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           <DialogFooter>
             <DialogClose asChild>
@@ -67,3 +95,4 @@ export default function EntriesDialog() {
     </Dialog>
   )
 }
+

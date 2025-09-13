@@ -1,4 +1,4 @@
-import { EntriesDialog } from "./EntriesDialog";
+import EntriesDialog from "./EntriesDialog";
 import EntriesRow from "./EntriesRow";
 
 export default function EntriesArea() {
