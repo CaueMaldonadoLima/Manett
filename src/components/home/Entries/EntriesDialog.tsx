@@ -16,6 +16,7 @@ import { Plus } from "lucide-react"
 import { useState } from "react"
 
 export function EntriesDialog() {
+  const [amount, setAmount] = useState("")
   const [title, setTitle] = useState("")
 
   return (
@@ -41,6 +42,17 @@ export function EntriesDialog() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g., Lunch, Uber, Salary"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="amount">Amount</Label>
+              <Input
+                id="amount"
+                type="number"
+                inputMode="decimal"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                placeholder="$0.00"
               />
             </div>
           </div>
