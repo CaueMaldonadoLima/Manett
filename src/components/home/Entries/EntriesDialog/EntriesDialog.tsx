@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label"
 import { Plus } from "lucide-react"
 import { useState } from "react"
 
-export function EntriesDialog() {
+export default function EntriesDialog() {
   const [amount, setAmount] = useState("")
   const [title, setTitle] = useState("")
 
