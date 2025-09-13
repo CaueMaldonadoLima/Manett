@@ -23,7 +23,7 @@ export interface Entry {
   title: string;
   description?: string;
   amount: number;
-  currency?: "BRL";
+  currency?: "USD";
   date: string;
   categoryId: CategoryId;
   type: EntryType;
