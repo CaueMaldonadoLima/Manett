@@ -11,7 +11,10 @@ const config: Config = {
   theme: {
   	extend: {
   		colors: {
-			primary: '#5700C2',
+			primary: {
+				DEFAULT: '#5700C2',
+				foreground: '#FFFFFF'
+			},
   			secondary: '#B9A6AD',
 			accent: '#D42177',
   			background: '#EEE4F1',
